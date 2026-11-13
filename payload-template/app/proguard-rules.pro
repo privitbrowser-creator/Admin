@@ -1,0 +1,6 @@
+-keep class com.ihk909.payload.** { *; }
+-keep class okhttp3.** { *; }
+-keep class kotlinx.coroutines.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn kotlinx.coroutines.**

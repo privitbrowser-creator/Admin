@@ -1,0 +1,4 @@
+-keep class com.chaquo.python.** { *; }
+-keep class com.ihk909.admin.** { *; }
+-keep class com.android.apksig.** { *; }
+-dontwarn **
