@@ -20,22 +20,28 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build admin-app
+      - name: Build projects
         run: |
-          cd admin-app
-          chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+          chmod +x gradlew || true
+          
+          if [ -d "admin-app" ]; then
+            cd admin-app
+            chmod +x gradlew || true
+            ./gradlew assembleDebug --no-daemon || ../gradlew assembleDebug --no-daemon
+            cd ..
+          fi
 
-      - name: Build payload-template
-        run: |
-          cd payload-template
-          chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+          if [ -d "payload-template" ]; then
+            cd payload-template
+            chmod +x gradlew || true
+            ./gradlew assembleDebug --no-daemon || ../gradlew assembleDebug --no-daemon
+            cd ..
+          fi
 
       - name: Upload APK Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: compiled-apks
           path: |
-            admin-app/app/build/outputs/apk/debug/*.apk
-            payload-template/app/build/outputs/apk/debug/*.apk
+            **/build/outputs/apk/debug/*.apk
+
